@@ -6,14 +6,15 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
-    """_summary_
+    """
+    Load data from .csv files 
 
     Args:
-        messages_filepath (_type_): _description_
-        categories_filepath (_type_): _description_
+        messages_filepath (string): Path to disaster_messages.csv
+        categories_filepath (string): Path to disaster_categories.csv
 
     Returns:
-        _type_: _description_
+        df (pd.DataFrame): DataFrame with the data loaded 
     """
     # load messages dataset
     messages = pd.read_csv(messages_filepath)
@@ -54,6 +55,15 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Clean dataframe 
+
+    Args:
+        df (pd.DataFrame): DataFrame loaded from the .csv files 
+
+    Returns:
+        df (pd.DataFrame): Cleand DataFrame
+    """
     
     # drop duplicates
     df = df.drop_duplicates().reset_index(drop = True)
@@ -65,6 +75,13 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    Save data into SQLite database
+
+    Args:
+        df (pd.DataFrame): Cleaned dataFrame 
+        database_filename (string): Filename for the database
+    """
     engine = create_engine(f'sqlite:///{database_filename}')
     df.to_sql('Messages_category', engine, index=False)  
     pass  
