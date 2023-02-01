@@ -36,6 +36,18 @@ from multilabel_split import multilabel_train_test_split
 import joblib
 
 def load_data(database_filepath):
+    """
+    Load data from SQLite database
+
+    Args:
+        database_filepath (string): Path to database 
+
+    Returns:
+        X (pd.DataFrame): X variables for ML model 
+        Y (pd.DataFrame): Y variable for ML model (multilabel)
+        category_names (list): Names of the categories 
+
+    """
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql("SELECT * FROM Messages_category", engine)
 
@@ -47,6 +59,15 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Tokenize and lemmatize text removing stop words 
+
+    Args:
+        text (string): Text to tokenize
+
+    Returns:
+        tokens (list): Tokenized text 
+    """
     # normalize case and remove punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower())
     
@@ -60,9 +81,13 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Create ML model 
 
-    # CleanTextTransformer = FunctionTransformer(clean_text_series_gensim)
-    
+    Returns:
+        pipeline (Sklearn pipeline): ML model pipeline
+    """
+
     # the parameters have been obtained using GridSearch in the Jupyter Notebook 
     pipeline =Pipeline([('vect', CountVectorizer(tokenizer=tokenize)),
                 ('tfidf', TfidfTransformer()),
@@ -73,6 +98,15 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Evaluate ML model using precission, recall, F1 score and Hamming score. Prints the results.  
+
+    Args:
+        model (Sklearn pipeline): ML model pipeline
+        X_test (pd.DataFrame): X_test variable for ML model 
+        Y_test (pd.DataFrame): Y_test variable for ML model (Multilabel)
+        category_names (list): Names of the categories
+    """
     Y_pred = model.predict(X_test)
     
     # classification report on test data
@@ -82,6 +116,13 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Save ML model 
+
+    Args:
+        model (Sklearn pipeline): ML model pipeline
+        model_filepath (string): Path to save location 
+    """
     joblib.dump(model, model_filepath)
 
     pass
