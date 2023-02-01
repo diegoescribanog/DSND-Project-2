@@ -28,7 +28,7 @@ The project utilizes the following Python libraries included in the Anaconda dis
 
 - Web deployment: Flask. 
 
-Additionally, it is necessary to install  the library Iterstrat ([more info here](https://github.com/trent-b/iterative-stratification)), to perform stratified train-test split on the multi-label dataset
+Additionally, it is necessary to install the library Iterstrat ([more info here](https://github.com/trent-b/iterative-stratification)), to perform stratified train-test split on the multi-label dataset. 
 
 The code should run with no issues using Python versions 3.*.
 
