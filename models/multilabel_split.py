@@ -1,7 +1,4 @@
 
-
-
-
 from iterstrat.ml_stratifiers import MultilabelStratifiedShuffleSplit
 from sklearn.utils import indexable, _safe_indexing
 from sklearn.utils.validation import _num_samples
@@ -18,6 +15,12 @@ def multilabel_train_test_split(*arrays,
     """
     Train test split for multilabel classification. Uses the algorithm from: 
     'Sechidis K., Tsoumakas G., Vlahavas I. (2011) On the Stratification of Multi-Label Data'.
+    """
+    """
+    Function to generate stratified train and test datasets in multilabel classification problems
+
+    Returns:
+        X_train, X_test, y_train, y_test (pd.DataFrame): Stratified train and test datasets 
     """
     if stratify is None:
         return train_test_split(*arrays, test_size=test_size,train_size=train_size,
